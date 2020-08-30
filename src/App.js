@@ -15,21 +15,38 @@ function App() {
 
   const addTodo = (event) => {
     // function which fires off when input button tapped
-    console.log("addTodo", event.target.value)
-    // pushes inpputted todo to end of todos array
+    
+    // prevents refreshing of entire page when form is submitted
+    event.preventDefault();
+    
+    // pushes inputted todo to end of todos array
     setTodos([...todos, inputTodo]);
+
+    //reset input
+    setInputTodo('');
   }
 
   return (
     <div className="App">
       <h1>Hello world</h1>
+
+      <form>
+        <input 
+          value = { inputTodo }
+          onChange = { event => setInputTodo(event.target.value) }
+        />
       
-      <input 
-        value = { inputTodo }
-        onChange = { event => setInputTodo(event.target.value) }
-      />
+        <button 
+          type = "submit" 
+          onClick = {addTodo}> 
+
+          Add Todo 
+
+        </button>
+
+      </form>
       
-      <button onClick = {addTodo}> Add Todo </button>
+      
 
       <ul>
         { todos.map(

@@ -1,8 +1,9 @@
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
 import React, { useState } from 'react';
+import Todo from './Todo.js';
 import './App.css';
 
-function App() {
+function App() { 
   
   // local state to hold tasks
   const [todos, setTodos] = useState(
@@ -54,12 +55,13 @@ function App() {
       
       <ul>
         { todos.map(
-          todo => ( 
-            <li> {todo} </li>
-            )
+          todo => (
+            <Todo text = {todo} />
+            ) 
           ) 
         }
       </ul>
+
     </div>
   );
 }

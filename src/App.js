@@ -1,28 +1,38 @@
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Todo from './Todo.js';
 import './App.css';
+import db from './firebase';
+import firebase from "firebase";
 
 function App() { 
   
   // local state to hold tasks
-  const [todos, setTodos] = useState(
-    [
-      'Task 1', 
-      'Task 2', 
-      'Task 3'
-    ]);
-
+  const [todos, setTodos] = useState([]);
   const [inputTodo, setInputTodo] = useState('');
+
+  // fetch and observe todos from firebase db
+  // useEffect runs on app load
+  useEffect(() => {
+    // this code here fires when app.js loads
+    db
+    .collection('todos')
+    .orderBy('timestamp','desc')
+    .onSnapshot(snapshot => {
+        setTodos(snapshot.docs.map(doc => doc.data().todo))
+      })
+  }, [])
 
   const addTodo = (event) => {
     // function which fires off when input button tapped
     
     // prevents refreshing of entire page when form is submitted
     event.preventDefault();
-    
-    // pushes inputted todo to end of todos array
-    setTodos([...todos, inputTodo]);
+
+    db.collection('todos').add({ 
+      todo: inputTodo,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
 
     //reset input
     setInputTodo('');

@@ -19,7 +19,11 @@ function App() {
     .collection('todos')
     .orderBy('timestamp','desc')
     .onSnapshot(snapshot => {
-        setTodos(snapshot.docs.map(doc => ({ todo: doc.data().todo })))
+        setTodos(snapshot.docs.map(doc => ({ 
+          todo: doc.data().todo,
+          id: doc.id,
+          likes: doc.data().likes,
+        })))
       })
   }, [])
 
@@ -31,7 +35,8 @@ function App() {
 
     db.collection('todos').add({ 
       todo: inputTodo,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      likes: 0
     })
 
     //reset input
@@ -66,7 +71,7 @@ function App() {
       <ul>
         { todos.map(
           todo => (
-            <Todo text = {todo} />
+            <Todo todo = {todo} />
             ) 
           ) 
         }

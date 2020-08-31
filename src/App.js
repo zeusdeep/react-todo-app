@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
 import React, { useState } from 'react';
 import './App.css';
 
@@ -30,13 +30,14 @@ function App() {
   return (
     <div className="App">
       <h1>Hello world</h1>
-
+      
       <form>
-        
-        <input 
-          value = { inputTodo }
-          onChange = { event => setInputTodo(event.target.value) }
-        />
+        <FormControl>
+          <InputLabel> Add Todo </InputLabel>
+          <Input 
+            value = { inputTodo }
+            onChange = { event => setInputTodo(event.target.value) } />
+        </FormControl>
 
         <Button 
           // disable button when inputTodo is empty
@@ -44,10 +45,11 @@ function App() {
           type = "submit" 
           variant="contained" 
           color="primary"
-          onClick = {addTodo} >
-              Add Todo
-        </Button>
+          onClick = {addTodo} >  
 
+            Add Todo
+
+        </Button>
       </form>
       
       <ul>

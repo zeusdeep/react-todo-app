@@ -3,6 +3,8 @@ import { ListItem, ListItemText, List } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import './Todo.css';
+import db from './firebase';
+import firebase from "firebase";
 
 function Todo(props) {
     return (
@@ -14,10 +16,14 @@ function Todo(props) {
                 />
             </ListItem>
             <DeleteIcon  
-                //onClick = { event => }
+                onClick = { event => db.collection('todos').doc(props.todo.id).delete() }
             />
             <ThumbUpIcon  
-                //onClick = { event => }
+                onClick = { event => db.collection('todos').doc(props.todo.id).update({
+                    likes:props.todo.likes + 1,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+            }
             />
         </List>
     )

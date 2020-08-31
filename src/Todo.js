@@ -6,7 +6,7 @@ function Todo(props) {
     return (
         <List>
             <ListItem >
-                <ListItemText primary = {props.text} />
+                <ListItemText primary = {props.text.todo} />
             </ListItem>
         </List>
     )

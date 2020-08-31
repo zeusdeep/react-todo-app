@@ -19,7 +19,7 @@ function App() {
     .collection('todos')
     .orderBy('timestamp','desc')
     .onSnapshot(snapshot => {
-        setTodos(snapshot.docs.map(doc => doc.data().todo))
+        setTodos(snapshot.docs.map(doc => ({ todo: doc.data().todo })))
       })
   }, [])
 
